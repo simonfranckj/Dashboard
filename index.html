@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TA Dashboard — Netcompany</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F3EE;
+    --surface: #FFFFFF;
+    --border: rgba(0,0,0,0.08);
+    --border-hover: rgba(0,0,0,0.16);
+    --text: #1A1A18;
+    --muted: #7A7870;
+    --faint: #B4B2A9;
+    --accent: #2C4A3E;
+    --accent-light: #E8F0ED;
+    --accent-btn: #2C4A3E;
+    --accent-btn-hover: #1e3329;
+    --danger: #C0392B;
+    --progress-bg: #E0DDD6;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 48px 24px 80px;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header { margin-bottom: 32px; }
+  .header-date {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--progress-bg);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.35s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    min-width: 72px;
+    text-align: right;
+  }
+
+  /* Task input */
+  .task-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .task-input {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    padding: 11px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .task-input::placeholder { color: var(--faint); }
+  .task-input:focus { border-color: var(--accent); }
+  .btn-add {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 22px;
+    background: var(--accent-btn);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .btn-add:hover { background: var(--accent-btn-hover); }
+
+  /* Task list */
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.15s, opacity 0.2s;
+    animation: slideIn 0.18s ease;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .task-item:hover { border-color: var(--border-hover); }
+  .task-item.done { opacity: 0.45; }
+  .task-cb {
+    width: 17px; height: 17px;
+    cursor: pointer;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+  }
+  .task-text {
+    flex: 1;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .task-item.done .task-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .task-del {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--faint);
+    font-size: 18px;
+    line-height: 1;
+    padding: 0 2px;
+    transition: color 0.15s;
+    display: flex; align-items: center;
+  }
+  .task-del:hover { color: var(--danger); }
+  .task-empty {
+    font-size: 14px;
+    color: var(--faint);
+    text-align: center;
+    padding: 28px 0;
+  }
+  .all-done {
+    font-size: 13px;
+    color: var(--accent);
+    margin-top: 6px;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  /* Bottom grid */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 560px) {
+    .bottom-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .card-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* Notes */
+  .notes-ta {
+    width: 100%;
+    min-height: 220px;
+    resize: vertical;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .notes-ta::placeholder { color: var(--faint); }
+  .notes-ta:focus { border-color: var(--accent); }
+
+  /* Links */
+  .links-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .link-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.15s;
+    animation: slideIn 0.18s ease;
+  }
+  .link-row:hover { border-color: var(--border-hover); }
+  .link-icon { color: var(--accent); font-size: 15px; flex-shrink: 0; }
+  .link-name { flex: 1; font-size: 14px; color: var(--text); }
+  .link-del {
+    background: none; border: none; cursor: pointer;
+    color: var(--faint); font-size: 16px; padding: 0 2px;
+    display: flex; align-items: center; transition: color 0.15s;
+  }
+  .link-del:hover { color: var(--danger); }
+  .link-empty { font-size: 13px; color: var(--faint); text-align: center; padding: 16px 0; }
+  .link-add-row { display: flex; gap: 6px; }
+  .link-add-row input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .link-add-row input:focus { border-color: var(--accent); }
+  .link-add-row input[name="llabel"] { width: 110px; flex-shrink: 0; }
+  .link-add-row input[name="lurl"] { flex: 1; min-width: 0; }
+  .btn-sm {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 14px;
+    background: var(--accent-btn);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .btn-sm:hover { background: var(--accent-btn-hover); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-date" id="dateLine"></div>
+    <div class="header-title">My tasks</div>
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">0 of 0 done</div>
+    </div>
+  </div>
+
+  <div class="task-input-row">
+    <input class="task-input" type="text" id="taskInput" placeholder="What needs to be done?" maxlength="140" />
+    <button class="btn-add" onclick="addTask()">Add task</button>
+  </div>
+  <div class="task-list" id="taskList"></div>
+  <div id="allDoneMsg"></div>
+
+  <hr class="divider" />
+
+  <div class="bottom-grid">
+    <div class="card">
+      <div class="card-label">Noter</div>
+      <textarea class="notes-ta" id="notesArea" placeholder="Kandidater, opkald, idéer..."></textarea>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Genveje</div>
+      <div class="links-list" id="linksList"></div>
+      <div class="link-add-row">
+        <input type="text" name="llabel" id="linkLabel" placeholder="Navn" maxlength="40" />
+        <input type="url" name="lurl" id="linkUrl" placeholder="https://..." maxlength="400" />
+        <button class="btn-sm" onclick="addLink()">+</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SK = { tasks: 'ta_tasks', notes: 'ta_notes', links: 'ta_links' };
+let tasks = [], notes = '', links = [];
+
+function load() {
+  try { tasks = JSON.parse(localStorage.getItem(SK.tasks)) || []; } catch(e) { tasks = []; }
+  try { notes = localStorage.getItem(SK.notes) || ''; } catch(e) {}
+  try { links = JSON.parse(localStorage.getItem(SK.links)) || []; } catch(e) { links = []; }
+}
+
+function persist(key, val) {
+  localStorage.setItem(key, typeof val === 'string' ? val : JSON.stringify(val));
+}
+
+function setDate() {
+  const d = new Date();
+  document.getElementById('dateLine').textContent =
+    d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).toUpperCase();
+}
+
+function renderTasks() {
+  const list = document.getElementById('taskList');
+  const done = tasks.filter(t => t.done).length;
+  const total = tasks.length;
+  document.getElementById('progressFill').style.width = total ? Math.round(done/total*100)+'%' : '0%';
+  document.getElementById('progressLabel').textContent = `${done} of ${total} done`;
+  document.getElementById('allDoneMsg').innerHTML =
+    (total > 0 && done === total) ? '<p class="all-done">Alt klaret i dag 🎉</p>' : '';
+
+  if (!total) { list.innerHTML = '<div class="task-empty">Ingen opgaver endnu</div>'; return; }
+  list.innerHTML = tasks.map((t, i) => `
+    <div class="task-item${t.done ? ' done' : ''}">
+      <input class="task-cb" type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask(${i})" />
+      <span class="task-text">${esc(t.text)}</span>
+      <button class="task-del" onclick="deleteTask(${i})" aria-label="Slet">&#x2715;</button>
+    </div>`).join('');
+}
+
+function addTask() {
+  const inp = document.getElementById('taskInput');
+  const text = inp.value.trim();
+  if (!text) return;
+  tasks.unshift({ text, done: false });
+  inp.value = '';
+  persist(SK.tasks, tasks);
+  renderTasks();
+}
+
+function toggleTask(i) { tasks[i].done = !tasks[i].done; persist(SK.tasks, tasks); renderTasks(); }
+function deleteTask(i) { tasks.splice(i, 1); persist(SK.tasks, tasks); renderTasks(); }
+
+function renderNotes() {
+  const ta = document.getElementById('notesArea');
+  ta.value = notes;
+  ta.oninput = () => { notes = ta.value; persist(SK.notes, notes); };
+}
+
+function renderLinks() {
+  const list = document.getElementById('linksList');
+  if (!links.length) { list.innerHTML = '<div class="link-empty">Tilføj dine genveje herunder</div>'; return; }
+  list.innerHTML = links.map((l, i) => `
+    <a class="link-row" href="${escAttr(l.url)}" target="_blank" rel="noopener">
+      <span class="link-icon">↗</span>
+      <span class="link-name">${esc(l.label)}</span>
+      <button class="link-del" onclick="event.preventDefault();event.stopPropagation();deleteLink(${i})" aria-label="Slet">&#x2715;</button>
+    </a>`).join('');
+}
+
+function addLink() {
+  const label = document.getElementById('linkLabel').value.trim();
+  const url = document.getElementById('linkUrl').value.trim();
+  if (!label || !url) return;
+  links.push({ label, url });
+  document.getElementById('linkLabel').value = '';
+  document.getElementById('linkUrl').value = '';
+  persist(SK.links, links);
+  renderLinks();
+}
+
+function deleteLink(i) { links.splice(i, 1); persist(SK.links, links); renderLinks(); }
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s) { return s.replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
+
+document.getElementById('taskInput').addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
+document.getElementById('linkUrl').addEventListener('keydown', e => { if (e.key === 'Enter') addLink(); });
+
+setDate();
+load();
+renderTasks();
+renderNotes();
+renderLinks();
+</script>
+</body>
+</html>
