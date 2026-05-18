@@ -177,7 +177,7 @@
           <div class="card-label">🚂 Rejseplanen</div>
           <p class="transport-desc">København H → Odense St</p>
           <a class="transport-btn"
-             href="https://rejseplanen.dk/bin/query.exe/nn?S=K%C3%B8benhavn+H&Z=Odense+St&start=1"
+             href="https://www.rejseplanen.dk/rejser/K%C3%B8benhavn+H/Odense+St"
              target="_blank" rel="noopener">Se næste afgange ↗</a>
         </div>
         <div class="card">
@@ -344,6 +344,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   setDate(); load(); renderTasks(); renderNotes(); renderLinks(); initDrag();
   CITIES.forEach(city=>fetchWeather(city).catch(()=>{ document.getElementById(city.id).innerHTML='<div class="weather-loading">Vejr utilgængeligt</div>'; }));
   fetchNews();
+  setInterval(fetchNews, 10 * 60 * 1000); // Opdater nyheder hvert 10. minut
 });
 </script>
 </body>
