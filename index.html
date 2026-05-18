@@ -13,12 +13,11 @@
     --bg: #F5F3EE;
     --surface: #FFFFFF;
     --border: rgba(0,0,0,0.08);
-    --border-hover: rgba(0,0,0,0.16);
+    --border-hover: rgba(0,0,0,0.18);
     --text: #1A1A18;
     --muted: #7A7870;
     --faint: #B4B2A9;
     --accent: #2C4A3E;
-    --accent-light: #E8F0ED;
     --accent-btn: #2C4A3E;
     --accent-btn-hover: #1e3329;
     --danger: #C0392B;
@@ -35,334 +34,109 @@
     padding: 48px 24px 80px;
   }
 
-  .container {
-    max-width: 780px;
-    margin: 0 auto;
-  }
+  .container { max-width: 780px; margin: 0 auto; }
 
   /* Header */
   .header { margin-bottom: 32px; }
-  .header-date {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 6px;
-  }
-  .header-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 42px;
-    font-weight: 400;
-    color: var(--text);
-    line-height: 1.1;
-    margin-bottom: 14px;
-  }
-  .progress-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .progress-track {
-    flex: 1;
-    height: 3px;
-    background: var(--progress-bg);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 3px;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.35s ease;
-    width: 0%;
-  }
-  .progress-label {
-    font-size: 12px;
-    color: var(--muted);
-    white-space: nowrap;
-    min-width: 72px;
-    text-align: right;
-  }
+  .header-date { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .header-title { font-family: 'DM Serif Display', serif; font-size: 42px; font-weight: 400; color: var(--text); line-height: 1.1; margin-bottom: 14px; }
+  .progress-row { display: flex; align-items: center; gap: 12px; }
+  .progress-track { flex: 1; height: 3px; background: var(--progress-bg); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 3px; background: var(--accent); border-radius: 2px; transition: width 0.35s ease; width: 0%; }
+  .progress-label { font-size: 12px; color: var(--muted); white-space: nowrap; min-width: 72px; text-align: right; }
 
   /* Task input */
-  .task-input-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .task-input {
-    flex: 1;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    padding: 11px 16px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-  }
+  .task-input-row { display: flex; gap: 10px; margin-bottom: 16px; }
+  .task-input { flex: 1; font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 11px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s; }
   .task-input::placeholder { color: var(--faint); }
   .task-input:focus { border-color: var(--accent); }
-  .btn-add {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 11px 22px;
-    background: var(--accent-btn);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.15s;
-  }
+  .btn-add { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; padding: 11px 22px; background: var(--accent-btn); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; white-space: nowrap; transition: background 0.15s; }
   .btn-add:hover { background: var(--accent-btn-hover); }
 
   /* Task list */
-  .task-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-  .task-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 14px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    transition: border-color 0.15s, opacity 0.2s;
-    animation: slideIn 0.18s ease;
-  }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  .task-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+  .task-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); transition: border-color 0.15s, opacity 0.2s; animation: slideIn 0.18s ease; }
+  @keyframes slideIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
   .task-item:hover { border-color: var(--border-hover); }
   .task-item.done { opacity: 0.45; }
-  .task-cb {
-    width: 17px; height: 17px;
-    cursor: pointer;
-    accent-color: var(--accent);
-    flex-shrink: 0;
-  }
-  .task-text {
-    flex: 1;
-    font-size: 15px;
-    color: var(--text);
-  }
-  .task-item.done .task-text {
-    text-decoration: line-through;
-    color: var(--muted);
-  }
-  .task-del {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--faint);
-    font-size: 18px;
-    line-height: 1;
-    padding: 0 2px;
-    transition: color 0.15s;
-    display: flex; align-items: center;
-  }
+  .task-cb { width: 17px; height: 17px; cursor: pointer; accent-color: var(--accent); flex-shrink: 0; }
+  .task-text { flex: 1; font-size: 15px; color: var(--text); }
+  .task-item.done .task-text { text-decoration: line-through; color: var(--muted); }
+  .task-del { background: none; border: none; cursor: pointer; color: var(--faint); font-size: 18px; line-height: 1; padding: 0 2px; transition: color 0.15s; display: flex; align-items: center; }
   .task-del:hover { color: var(--danger); }
-  .task-empty {
-    font-size: 14px;
-    color: var(--faint);
-    text-align: center;
-    padding: 28px 0;
-  }
-  .all-done {
-    font-size: 13px;
-    color: var(--accent);
-    margin-top: 6px;
-  }
+  .task-empty { font-size: 14px; color: var(--faint); text-align: center; padding: 28px 0; }
+  .all-done { font-size: 13px; color: var(--accent); margin-top: 6px; }
 
   /* Divider */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 32px 0;
-  }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
 
-  /* Bottom grid */
-  .bottom-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  @media (max-width: 560px) {
-    .bottom-grid { grid-template-columns: 1fr; }
-  }
+  /* Draggable sections */
+  #sections { display: flex; flex-direction: column; gap: 16px; }
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-  }
-  .card-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
+  .section-block { position: relative; }
+  .section-block.dragging { opacity: 0.35; }
+  .section-block.drag-over { outline: 2px dashed var(--accent); outline-offset: 4px; border-radius: var(--radius); }
 
-  /* Notes */
-  .notes-ta {
-    width: 100%;
-    min-height: 220px;
-    resize: vertical;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    line-height: 1.7;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
+  .drag-handle {
+    position: absolute; top: 12px; right: 12px; z-index: 10;
+    cursor: grab; color: var(--faint); font-size: 18px; line-height: 1;
+    user-select: none; padding: 3px 5px; border-radius: 4px; transition: color 0.15s, background 0.15s;
   }
-  .notes-ta::placeholder { color: var(--faint); }
-  .notes-ta:focus { border-color: var(--accent); }
+  .drag-handle:hover { color: var(--muted); background: rgba(0,0,0,0.04); }
+  .drag-handle:active { cursor: grabbing; }
 
-  /* Links */
-  .links-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
-  .link-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    text-decoration: none;
-    transition: border-color 0.15s;
-    animation: slideIn 0.18s ease;
-  }
-  .link-row:hover { border-color: var(--border-hover); }
-  .link-icon { color: var(--accent); font-size: 15px; flex-shrink: 0; }
-  .link-name { flex: 1; font-size: 14px; color: var(--text); }
-  .link-del {
-    background: none; border: none; cursor: pointer;
-    color: var(--faint); font-size: 16px; padding: 0 2px;
-    display: flex; align-items: center; transition: color 0.15s;
-  }
-  .link-del:hover { color: var(--danger); }
-  .link-empty { font-size: 13px; color: var(--faint); text-align: center; padding: 16px 0; }
-  .link-add-row { display: flex; gap: 6px; }
-  .link-add-row input {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    padding: 7px 10px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .link-add-row input:focus { border-color: var(--accent); }
-  .link-add-row input[name="llabel"] { width: 110px; flex-shrink: 0; }
-  .link-add-row input[name="lurl"] { flex: 1; min-width: 0; }
-  .btn-sm {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 7px 14px;
-    background: var(--accent-btn);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: background 0.15s;
-    flex-shrink: 0;
-  }
-  .btn-sm:hover { background: var(--accent-btn-hover); }
+  /* Two-column layout */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Card */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+  .card-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
 
   /* Weather */
-  .weather-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
+  .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 560px) { .weather-grid { grid-template-columns: 1fr; } }
-  .weather-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+  .weather-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
   .weather-icon { font-size: 36px; line-height: 1; flex-shrink: 0; }
   .weather-body { flex: 1; min-width: 0; }
-  .weather-city {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 2px;
-  }
-  .weather-temp {
-    font-family: 'DM Serif Display', serif;
-    font-size: 32px;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
+  .weather-city { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .weather-temp { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--text); line-height: 1; margin-bottom: 4px; }
   .weather-desc { font-size: 13px; color: var(--muted); }
   .weather-detail { font-size: 12px; color: var(--faint); margin-top: 2px; }
   .weather-loading { font-size: 13px; color: var(--faint); padding: 8px 0; }
 
   /* Transport */
-  .transport-desc {
-    font-size: 14px;
-    color: var(--text);
-    margin-bottom: 12px;
-  }
-  .transport-btn {
-    display: inline-block;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 9px 18px;
-    background: var(--accent-btn);
-    color: #fff;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    transition: background 0.15s;
-  }
+  .transport-desc { font-size: 14px; color: var(--text); margin-bottom: 12px; }
+  .transport-btn { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; padding: 9px 18px; background: var(--accent-btn); color: #fff; border-radius: var(--radius-sm); text-decoration: none; transition: background 0.15s; }
   .transport-btn:hover { background: var(--accent-btn-hover); }
 
   /* News */
   .news-list { display: flex; flex-direction: column; gap: 6px; }
-  .news-item {
-    display: block;
-    font-size: 13px;
-    color: var(--text);
-    text-decoration: none;
-    padding: 7px 10px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    line-height: 1.4;
-    transition: border-color 0.15s;
-  }
+  .news-item { display: block; font-size: 13px; color: var(--text); text-decoration: none; padding: 7px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); line-height: 1.4; transition: border-color 0.15s; }
   .news-item:hover { border-color: var(--border-hover); }
   .news-loading { font-size: 13px; color: var(--faint); padding: 8px 0; }
+
+  /* Notes */
+  .notes-ta { width: 100%; min-height: 200px; resize: vertical; font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.7; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); outline: none; transition: border-color 0.15s; }
+  .notes-ta::placeholder { color: var(--faint); }
+  .notes-ta:focus { border-color: var(--accent); }
+
+  /* Links */
+  .links-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .link-row { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); text-decoration: none; transition: border-color 0.15s; animation: slideIn 0.18s ease; }
+  .link-row:hover { border-color: var(--border-hover); }
+  .link-icon { color: var(--accent); font-size: 15px; flex-shrink: 0; }
+  .link-name { flex: 1; font-size: 14px; color: var(--text); }
+  .link-del { background: none; border: none; cursor: pointer; color: var(--faint); font-size: 16px; padding: 0 2px; display: flex; align-items: center; transition: color 0.15s; }
+  .link-del:hover { color: var(--danger); }
+  .link-empty { font-size: 13px; color: var(--faint); text-align: center; padding: 16px 0; }
+  .link-add-row { display: flex; gap: 6px; }
+  .link-add-row input { font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); outline: none; transition: border-color 0.15s; }
+  .link-add-row input:focus { border-color: var(--accent); }
+  .link-add-row input[name="llabel"] { width: 110px; flex-shrink: 0; }
+  .link-add-row input[name="lurl"] { flex: 1; min-width: 0; }
+  .btn-sm { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 7px 14px; background: var(--accent-btn); color: #fff; border: none; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.15s; flex-shrink: 0; }
+  .btn-sm:hover { background: var(--accent-btn-hover); }
 </style>
 </head>
 <body>
@@ -386,202 +160,189 @@
 
   <hr class="divider" />
 
-  <div class="weather-grid">
-    <div class="weather-card" id="weather-kbh">
-      <div class="weather-loading">Henter vejr...</div>
-    </div>
-    <div class="weather-card" id="weather-odense">
-      <div class="weather-loading">Henter vejr...</div>
-    </div>
-  </div>
+  <div id="sections">
 
-  <hr class="divider" style="margin-top:0;" />
-
-  <!-- Transport + Nyheder -->
-  <div class="bottom-grid" style="margin-bottom:16px;">
-    <div class="card">
-      <div class="card-label">🚂 Rejseplanen</div>
-      <p class="transport-desc">København H → Odense St</p>
-      <a class="transport-btn" href="https://www.rejseplanen.dk/webapp/?originId=8600626&destId=8600053" target="_blank" rel="noopener">
-        Se næste afgange ↗
-      </a>
-    </div>
-    <div class="card">
-      <div class="card-label">📰 DR Nyheder</div>
-      <div id="newsList"><div class="news-loading">Henter nyheder...</div></div>
-    </div>
-  </div>
-
-  <div class="bottom-grid">
-    <div class="card">
-      <div class="card-label">Noter</div>
-      <textarea class="notes-ta" id="notesArea" placeholder="Kandidater, opkald, idéer..."></textarea>
-    </div>
-
-    <div class="card">
-      <div class="card-label">Genveje</div>
-      <div class="links-list" id="linksList"></div>
-      <div class="link-add-row">
-        <input type="text" name="llabel" id="linkLabel" placeholder="Navn" maxlength="40" />
-        <input type="url" name="lurl" id="linkUrl" placeholder="https://..." maxlength="400" />
-        <button class="btn-sm" onclick="addLink()">+</button>
+    <div class="section-block" data-id="weather" draggable="true">
+      <div class="drag-handle" title="Træk for at flytte">⠿</div>
+      <div class="weather-grid">
+        <div class="weather-card" id="weather-kbh"><div class="weather-loading">Henter vejr...</div></div>
+        <div class="weather-card" id="weather-odense"><div class="weather-loading">Henter vejr...</div></div>
       </div>
     </div>
-  </div>
 
+    <div class="section-block" data-id="transport-news" draggable="true">
+      <div class="drag-handle" title="Træk for at flytte">⠿</div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-label">🚂 Rejseplanen</div>
+          <p class="transport-desc">København H → Odense St</p>
+          <a class="transport-btn"
+             href="https://rejseplanen.dk/bin/query.exe/nn?S=K%C3%B8benhavn+H&Z=Odense+St&start=1"
+             target="_blank" rel="noopener">Se næste afgange ↗</a>
+        </div>
+        <div class="card">
+          <div class="card-label">📰 DR Nyheder</div>
+          <div id="newsList"><div class="news-loading">Henter nyheder...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block" data-id="notes-links" draggable="true">
+      <div class="drag-handle" title="Træk for at flytte">⠿</div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-label">Noter</div>
+          <textarea class="notes-ta" id="notesArea" placeholder="Kandidater, opkald, idéer..."></textarea>
+        </div>
+        <div class="card">
+          <div class="card-label">Genveje</div>
+          <div class="links-list" id="linksList"></div>
+          <div class="link-add-row">
+            <input type="text" name="llabel" id="linkLabel" placeholder="Navn" maxlength="40" />
+            <input type="url" name="lurl" id="linkUrl" placeholder="https://..." maxlength="400" />
+            <button class="btn-sm" onclick="addLink()">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-const SK = { tasks: 'ta_tasks', notes: 'ta_notes', links: 'ta_links' };
+const SK = { tasks:'ta_tasks', notes:'ta_notes', links:'ta_links', order:'ta_section_order' };
 let tasks = [], notes = '', links = [];
 
 function load() {
-  try { tasks = JSON.parse(localStorage.getItem(SK.tasks)) || []; } catch(e) { tasks = []; }
+  try { tasks = JSON.parse(localStorage.getItem(SK.tasks)) || []; } catch(e) { tasks=[]; }
   try { notes = localStorage.getItem(SK.notes) || ''; } catch(e) {}
-  try { links = JSON.parse(localStorage.getItem(SK.links)) || []; } catch(e) { links = []; }
+  try { links = JSON.parse(localStorage.getItem(SK.links)) || []; } catch(e) { links=[]; }
 }
-
-function persist(key, val) {
-  localStorage.setItem(key, typeof val === 'string' ? val : JSON.stringify(val));
-}
+function persist(key, val) { localStorage.setItem(key, typeof val==='string'?val:JSON.stringify(val)); }
 
 function setDate() {
-  const d = new Date();
   document.getElementById('dateLine').textContent =
-    d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).toUpperCase();
+    new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}).toUpperCase();
 }
 
 function renderTasks() {
-  const list = document.getElementById('taskList');
-  const done = tasks.filter(t => t.done).length;
-  const total = tasks.length;
+  const list=document.getElementById('taskList');
+  const done=tasks.filter(t=>t.done).length, total=tasks.length;
   document.getElementById('progressFill').style.width = total ? Math.round(done/total*100)+'%' : '0%';
   document.getElementById('progressLabel').textContent = `${done} of ${total} done`;
-  document.getElementById('allDoneMsg').innerHTML =
-    (total > 0 && done === total) ? '<p class="all-done">Alt klaret i dag 🎉</p>' : '';
-
-  if (!total) { list.innerHTML = '<div class="task-empty">Ingen opgaver endnu</div>'; return; }
-  list.innerHTML = tasks.map((t, i) => `
-    <div class="task-item${t.done ? ' done' : ''}">
-      <input class="task-cb" type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask(${i})" />
+  document.getElementById('allDoneMsg').innerHTML = (total>0&&done===total) ? '<p class="all-done">Alt klaret i dag 🎉</p>' : '';
+  if (!total) { list.innerHTML='<div class="task-empty">Ingen opgaver endnu</div>'; return; }
+  list.innerHTML = tasks.map((t,i)=>`
+    <div class="task-item${t.done?' done':''}">
+      <input class="task-cb" type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${i})" />
       <span class="task-text">${esc(t.text)}</span>
       <button class="task-del" onclick="deleteTask(${i})" aria-label="Slet">&#x2715;</button>
     </div>`).join('');
 }
-
 function addTask() {
-  const inp = document.getElementById('taskInput');
-  const text = inp.value.trim();
+  const inp=document.getElementById('taskInput'), text=inp.value.trim();
   if (!text) return;
-  tasks.unshift({ text, done: false });
-  inp.value = '';
-  persist(SK.tasks, tasks);
-  renderTasks();
+  tasks.unshift({text,done:false}); inp.value='';
+  persist(SK.tasks,tasks); renderTasks();
 }
-
-function toggleTask(i) { tasks[i].done = !tasks[i].done; persist(SK.tasks, tasks); renderTasks(); }
-function deleteTask(i) { tasks.splice(i, 1); persist(SK.tasks, tasks); renderTasks(); }
+function toggleTask(i) { tasks[i].done=!tasks[i].done; persist(SK.tasks,tasks); renderTasks(); }
+function deleteTask(i) { tasks.splice(i,1); persist(SK.tasks,tasks); renderTasks(); }
 
 function renderNotes() {
-  const ta = document.getElementById('notesArea');
-  ta.value = notes;
-  ta.oninput = () => { notes = ta.value; persist(SK.notes, notes); };
+  const ta=document.getElementById('notesArea');
+  ta.value=notes;
+  ta.oninput=()=>{ notes=ta.value; persist(SK.notes,notes); };
 }
 
 function renderLinks() {
-  const list = document.getElementById('linksList');
-  if (!links.length) { list.innerHTML = '<div class="link-empty">Tilføj dine genveje herunder</div>'; return; }
-  list.innerHTML = links.map((l, i) => `
+  const list=document.getElementById('linksList');
+  if (!links.length) { list.innerHTML='<div class="link-empty">Tilføj dine genveje herunder</div>'; return; }
+  list.innerHTML=links.map((l,i)=>`
     <a class="link-row" href="${escAttr(l.url)}" target="_blank" rel="noopener">
       <span class="link-icon">↗</span>
       <span class="link-name">${esc(l.label)}</span>
       <button class="link-del" onclick="event.preventDefault();event.stopPropagation();deleteLink(${i})" aria-label="Slet">&#x2715;</button>
     </a>`).join('');
 }
-
 function addLink() {
-  const label = document.getElementById('linkLabel').value.trim();
-  const url = document.getElementById('linkUrl').value.trim();
-  if (!label || !url) return;
-  links.push({ label, url });
-  document.getElementById('linkLabel').value = '';
-  document.getElementById('linkUrl').value = '';
-  persist(SK.links, links);
-  renderLinks();
+  const label=document.getElementById('linkLabel').value.trim(), url=document.getElementById('linkUrl').value.trim();
+  if (!label||!url) return;
+  links.push({label,url});
+  document.getElementById('linkLabel').value=''; document.getElementById('linkUrl').value='';
+  persist(SK.links,links); renderLinks();
+}
+function deleteLink(i) { links.splice(i,1); persist(SK.links,links); renderLinks(); }
+
+/* Weather */
+const CITIES=[{id:'weather-kbh',name:'København',lat:55.6761,lon:12.5683},{id:'weather-odense',name:'Odense',lat:55.4038,lon:10.4024}];
+const WMO={0:'Klar',1:'Næsten klar',2:'Delvist skyet',3:'Skyet',45:'Tåge',48:'Tåge',51:'Let støvregn',53:'Støvregn',55:'Kraftig støvregn',61:'Let regn',63:'Regn',65:'Kraftig regn',71:'Let sne',73:'Sne',75:'Kraftig sne',80:'Regnbyger',81:'Regnbyger',82:'Kraftige regnbyger',95:'Tordenvejr',96:'Tordenvejr m. hagl',99:'Kraftigt tordenvejr'};
+const WMO_ICON={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+async function fetchWeather(city) {
+  const d=await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m,precipitation&wind_speed_unit=ms&timezone=Europe%2FCopenhagen`)).json();
+  const c=d.current, code=c.weathercode;
+  document.getElementById(city.id).innerHTML=`<div class="weather-icon">${WMO_ICON[code]||'🌡️'}</div><div class="weather-body"><div class="weather-city">${city.name}</div><div class="weather-temp">${Math.round(c.temperature_2m)}°</div><div class="weather-desc">${WMO[code]||'Ukendt'}</div><div class="weather-detail">Føles som ${Math.round(c.apparent_temperature)}° · Vind ${c.windspeed_10m} m/s · Nedbør ${c.precipitation} mm</div></div>`;
 }
 
-function deleteLink(i) { links.splice(i, 1); persist(SK.links, links); renderLinks(); }
+/* News */
+async function fetchNews() {
+  try {
+    const d=await (await fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.dr.dk%2Fnyheder%2Fservice%2Ffeeds%2Fallenyheder')).json();
+    const items=(d.items||[]).slice(0,6);
+    if (!items.length) throw 0;
+    document.getElementById('newsList').innerHTML='<div class="news-list">'+items.map(i=>`<a class="news-item" href="${escAttr(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a>`).join('')+'</div>';
+  } catch(e) { document.getElementById('newsList').innerHTML='<div class="news-loading">Nyheder utilgængelige</div>'; }
+}
+
+/* Drag & drop */
+function initDrag() {
+  const container=document.getElementById('sections');
+  // Restore saved order
+  try {
+    const saved=JSON.parse(localStorage.getItem(SK.order));
+    if (Array.isArray(saved)) saved.forEach(id=>{ const el=container.querySelector(`[data-id="${id}"]`); if(el) container.appendChild(el); });
+  } catch(e) {}
+
+  function saveOrder() {
+    persist(SK.order, [...container.querySelectorAll('.section-block')].map(el=>el.dataset.id));
+  }
+
+  let dragged=null;
+  container.addEventListener('dragstart', e=>{
+    dragged=e.target.closest('.section-block');
+    if (dragged) setTimeout(()=>dragged.classList.add('dragging'),0);
+  });
+  container.addEventListener('dragend', ()=>{
+    if (dragged) { dragged.classList.remove('dragging'); dragged=null; }
+    container.querySelectorAll('.section-block').forEach(b=>b.classList.remove('drag-over'));
+    saveOrder();
+  });
+  container.addEventListener('dragover', e=>{
+    e.preventDefault();
+    const target=e.target.closest('.section-block');
+    container.querySelectorAll('.section-block').forEach(b=>b.classList.remove('drag-over'));
+    if (target&&target!==dragged) target.classList.add('drag-over');
+  });
+  container.addEventListener('drop', e=>{
+    e.preventDefault();
+    const target=e.target.closest('.section-block');
+    if (!target||target===dragged||!dragged) return;
+    const blocks=[...container.querySelectorAll('.section-block')];
+    const from=blocks.indexOf(dragged), to=blocks.indexOf(target);
+    container.insertBefore(dragged, from<to ? target.nextSibling : target);
+    container.querySelectorAll('.section-block').forEach(b=>b.classList.remove('drag-over'));
+    saveOrder();
+  });
+}
 
 function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escAttr(s) { return s.replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
 
-document.getElementById('taskInput').addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
-document.getElementById('linkUrl').addEventListener('keydown', e => { if (e.key === 'Enter') addLink(); });
+document.getElementById('taskInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addTask(); });
+document.getElementById('linkUrl').addEventListener('keydown',   e=>{ if(e.key==='Enter') addLink(); });
 
-// Weather via Open-Meteo (no API key needed)
-const CITIES = [
-  { id: 'weather-kbh',    name: 'København', lat: 55.6761, lon: 12.5683 },
-  { id: 'weather-odense', name: 'Odense',    lat: 55.4038, lon: 10.4024 },
-];
-
-const WMO = {
-  0:'Klar',1:'Næsten klar',2:'Delvist skyet',3:'Skyet',
-  45:'Tåge',48:'Tåge',51:'Let støvregn',53:'Støvregn',55:'Kraftig støvregn',
-  61:'Let regn',63:'Regn',65:'Kraftig regn',71:'Let sne',73:'Sne',75:'Kraftig sne',
-  80:'Regnbyger',81:'Regnbyger',82:'Kraftige regnbyger',
-  95:'Tordenvejr',96:'Tordenvejr med hagl',99:'Kraftigt tordenvejr',
-};
-
-const WMO_ICON = {
-  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',
-  45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',
-  61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'❄️',75:'❄️',
-  80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️',
-};
-
-async function fetchWeather(city) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}` +
-    `&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m,precipitation` +
-    `&wind_speed_unit=ms&timezone=Europe%2FCopenhagen`;
-  const r = await fetch(url);
-  const d = await r.json();
-  const c = d.current;
-  const code = c.weathercode;
-  document.getElementById(city.id).innerHTML = `
-    <div class="weather-icon">${WMO_ICON[code] || '🌡️'}</div>
-    <div class="weather-body">
-      <div class="weather-city">${city.name}</div>
-      <div class="weather-temp">${Math.round(c.temperature_2m)}°</div>
-      <div class="weather-desc">${WMO[code] || 'Ukendt'}</div>
-      <div class="weather-detail">Føles som ${Math.round(c.apparent_temperature)}° &nbsp;·&nbsp; Vind ${c.windspeed_10m} m/s &nbsp;·&nbsp; Nedbør ${c.precipitation} mm</div>
-    </div>`;
-}
-
-async function fetchNews() {
-  const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.dr.dk%2Fnyheder%2Fservice%2Ffeeds%2Fallenyheder';
-  try {
-    const r = await fetch(proxy);
-    const d = await r.json();
-    const items = (d.items || []).slice(0, 6);
-    if (!items.length) throw new Error('ingen nyheder');
-    document.getElementById('newsList').innerHTML =
-      '<div class="news-list">' +
-      items.map(i => `<a class="news-item" href="${escAttr(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a>`).join('') +
-      '</div>';
-  } catch(e) {
-    document.getElementById('newsList').innerHTML = '<div class="news-loading">Nyheder utilgængelige</div>';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  setDate();
-  load();
-  renderTasks();
-  renderNotes();
-  renderLinks();
-  CITIES.forEach(city => fetchWeather(city).catch(() => {
-    document.getElementById(city.id).innerHTML = `<div class="weather-loading">Vejr utilgængeligt</div>`;
-  }));
+document.addEventListener('DOMContentLoaded', ()=>{
+  setDate(); load(); renderTasks(); renderNotes(); renderLinks(); initDrag();
+  CITIES.forEach(city=>fetchWeather(city).catch(()=>{ document.getElementById(city.id).innerHTML='<div class="weather-loading">Vejr utilgængeligt</div>'; }));
   fetchNews();
 });
 </script>
