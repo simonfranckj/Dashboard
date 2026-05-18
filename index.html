@@ -288,6 +288,44 @@
     flex-shrink: 0;
   }
   .btn-sm:hover { background: var(--accent-btn-hover); }
+
+  /* Weather */
+  .weather-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 560px) { .weather-grid { grid-template-columns: 1fr; } }
+  .weather-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .weather-icon { font-size: 36px; line-height: 1; flex-shrink: 0; }
+  .weather-body { flex: 1; min-width: 0; }
+  .weather-city {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .weather-temp {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .weather-desc { font-size: 13px; color: var(--muted); }
+  .weather-detail { font-size: 12px; color: var(--faint); margin-top: 2px; }
+  .weather-loading { font-size: 13px; color: var(--faint); padding: 8px 0; }
 </style>
 </head>
 <body>
@@ -310,6 +348,17 @@
   <div id="allDoneMsg"></div>
 
   <hr class="divider" />
+
+  <div class="weather-grid">
+    <div class="weather-card" id="weather-kbh">
+      <div class="weather-loading">Henter vejr...</div>
+    </div>
+    <div class="weather-card" id="weather-odense">
+      <div class="weather-loading">Henter vejr...</div>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-top:0;" />
 
   <div class="bottom-grid">
     <div class="card">
@@ -416,6 +465,49 @@ function escAttr(s) { return s.replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
 
 document.getElementById('taskInput').addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
 document.getElementById('linkUrl').addEventListener('keydown', e => { if (e.key === 'Enter') addLink(); });
+
+// Weather via Open-Meteo (no API key needed)
+const CITIES = [
+  { id: 'weather-kbh',    name: 'København', lat: 55.6761, lon: 12.5683 },
+  { id: 'weather-odense', name: 'Odense',    lat: 55.4038, lon: 10.4024 },
+];
+
+const WMO = {
+  0:'Klar',1:'Næsten klar',2:'Delvist skyet',3:'Skyet',
+  45:'Tåge',48:'Tåge',51:'Let støvregn',53:'Støvregn',55:'Kraftig støvregn',
+  61:'Let regn',63:'Regn',65:'Kraftig regn',71:'Let sne',73:'Sne',75:'Kraftig sne',
+  80:'Regnbyger',81:'Regnbyger',82:'Kraftige regnbyger',
+  95:'Tordenvejr',96:'Tordenvejr med hagl',99:'Kraftigt tordenvejr',
+};
+
+const WMO_ICON = {
+  0:'☀️',1:'🌤️',2:'⛅',3:'☁️',
+  45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',
+  61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'❄️',75:'❄️',
+  80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️',
+};
+
+async function fetchWeather(city) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}` +
+    `&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m,precipitation` +
+    `&wind_speed_unit=ms&timezone=Europe%2FCopenhagen`;
+  const r = await fetch(url);
+  const d = await r.json();
+  const c = d.current;
+  const code = c.weathercode;
+  document.getElementById(city.id).innerHTML = `
+    <div class="weather-icon">${WMO_ICON[code] || '🌡️'}</div>
+    <div class="weather-body">
+      <div class="weather-city">${city.name}</div>
+      <div class="weather-temp">${Math.round(c.temperature_2m)}°</div>
+      <div class="weather-desc">${WMO[code] || 'Ukendt'}</div>
+      <div class="weather-detail">Føles som ${Math.round(c.apparent_temperature)}° &nbsp;·&nbsp; Vind ${c.windspeed_10m} m/s &nbsp;·&nbsp; Nedbør ${c.precipitation} mm</div>
+    </div>`;
+}
+
+CITIES.forEach(city => fetchWeather(city).catch(() => {
+  document.getElementById(city.id).innerHTML = `<div class="weather-loading">Vejr utilgængeligt</div>`;
+}));
 
 setDate();
 load();
