@@ -326,6 +326,43 @@
   .weather-desc { font-size: 13px; color: var(--muted); }
   .weather-detail { font-size: 12px; color: var(--faint); margin-top: 2px; }
   .weather-loading { font-size: 13px; color: var(--faint); padding: 8px 0; }
+
+  /* Transport */
+  .transport-desc {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .transport-btn {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 9px 18px;
+    background: var(--accent-btn);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .transport-btn:hover { background: var(--accent-btn-hover); }
+
+  /* News */
+  .news-list { display: flex; flex-direction: column; gap: 6px; }
+  .news-item {
+    display: block;
+    font-size: 13px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 7px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    line-height: 1.4;
+    transition: border-color 0.15s;
+  }
+  .news-item:hover { border-color: var(--border-hover); }
+  .news-loading { font-size: 13px; color: var(--faint); padding: 8px 0; }
 </style>
 </head>
 <body>
@@ -359,6 +396,21 @@
   </div>
 
   <hr class="divider" style="margin-top:0;" />
+
+  <!-- Transport + Nyheder -->
+  <div class="bottom-grid" style="margin-bottom:16px;">
+    <div class="card">
+      <div class="card-label">🚂 Rejseplanen</div>
+      <p class="transport-desc">København H → Odense St</p>
+      <a class="transport-btn" href="https://www.rejseplanen.dk/webapp/?originId=8600626&destId=8600053" target="_blank" rel="noopener">
+        Se næste afgange ↗
+      </a>
+    </div>
+    <div class="card">
+      <div class="card-label">📰 DR Nyheder</div>
+      <div id="newsList"><div class="news-loading">Henter nyheder...</div></div>
+    </div>
+  </div>
 
   <div class="bottom-grid">
     <div class="card">
@@ -505,15 +557,33 @@ async function fetchWeather(city) {
     </div>`;
 }
 
-CITIES.forEach(city => fetchWeather(city).catch(() => {
-  document.getElementById(city.id).innerHTML = `<div class="weather-loading">Vejr utilgængeligt</div>`;
-}));
+async function fetchNews() {
+  const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.dr.dk%2Fnyheder%2Fservice%2Ffeeds%2Fallenyheder';
+  try {
+    const r = await fetch(proxy);
+    const d = await r.json();
+    const items = (d.items || []).slice(0, 6);
+    if (!items.length) throw new Error('ingen nyheder');
+    document.getElementById('newsList').innerHTML =
+      '<div class="news-list">' +
+      items.map(i => `<a class="news-item" href="${escAttr(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a>`).join('') +
+      '</div>';
+  } catch(e) {
+    document.getElementById('newsList').innerHTML = '<div class="news-loading">Nyheder utilgængelige</div>';
+  }
+}
 
-setDate();
-load();
-renderTasks();
-renderNotes();
-renderLinks();
+document.addEventListener('DOMContentLoaded', () => {
+  setDate();
+  load();
+  renderTasks();
+  renderNotes();
+  renderLinks();
+  CITIES.forEach(city => fetchWeather(city).catch(() => {
+    document.getElementById(city.id).innerHTML = `<div class="weather-loading">Vejr utilgængeligt</div>`;
+  }));
+  fetchNews();
+});
 </script>
 </body>
 </html>
